@@ -19,6 +19,10 @@ namespace Conveyer
         {           
             Regex reg = new Regex("^[a-zA-Z0-9]");
 
+            bool goUp = false;
+            bool goRight = true;
+            bool moveSideways = true;
+
             for (int h = 1; h < Controller.height;)
             {
                 for (int l = 2; l < length;)
@@ -29,37 +33,59 @@ namespace Conveyer
                     }
                     Console.WriteLine("h = " + h);
                     Console.WriteLine("l = " + l);
-
-                    bool goUp = false;
-                    bool goRight = true;
                     #region MazeCheck
-                    if ((_map[h, l] == '_' || _map[h, l] == '|') && _map[h, l - 1] == '|' && _map[h, l + 1] == '|')//Go down
+
+
+                    if (_map[h, l - 1] == '>') //Check For Direction --> go right
+                    {
+                        moveSideways = true;
+                        goRight = true;
+                    }
+
+                    if (_map[h, l + 1] == '<') //Check For Direction --> go left
+                    {
+                        moveSideways = true;
+                        goRight = false;
+                    }
+
+                    if (_map[h - 1, l] == '^') //Check For Direction --> go up
+                    {
+                        goUp = true;
+                        moveSideways = false;
+                        Console.WriteLine("GooooUP");
+                    }
+                    if (_map[h, l] == 'ᵥ') //Check For Direction --> go down
                     {
                         goUp = false;
-                        h++;
+                        moveSideways = false;
+                        Console.WriteLine("GooooDOWN");
                     }
 
-                    if (_map[h + 1, l] == '‾' && _map[h, l - 1] == '|' && _map[h, l + 1] == '|' && goRight == true)//Go to the right 
+                    if (_map[h, l - 1] == '|' && _map[h, l + 1] == '|' && goUp == false && moveSideways == false) //Go down
                     {
-                        Console.Write("Reeeek");
-                        l++;
-                        goUp = true;
+                        if(_map[h + 1, l] != '‾')
+                            h++;
                     }
 
-                    if (_map[h + 1, l] == '‾' && (_map[h, l + 1] == '|' || _map[h, l - 1] == '|') && goUp == true) //Go up
+                    if (_map[h, l - 1] == '|' && _map[h, l + 1] == '|' && goUp == true && moveSideways == false) //Go up
                     {
                         h--;
                     }
 
-                    if (_map[h, l + 1] == '|' && _map[h + 1, l] == '‾' && goRight == false)//Go to the left
+                    if (_map[h + 1, l - 2] == '‾' && goRight == false && moveSideways == true) //Go left
                     {
-                       l--;
-                       goUp = true;
+                        l--;
                     }
-                    
-                    if(_map[h, l + 1] == '~')
+
+                    if (_map[h + 1, l + 2] == '‾' && goRight == true && moveSideways == true) //Go right
                     {
-                         Console.WriteLine("~");
+                        l++;
+                    }
+
+                    if (_map[h, l + 1] == '~') //End of conveyor belt
+                    {
+                        Console.WriteLine("Mission Complete!");
+                        break;
                     }
                     #endregion
                 }
