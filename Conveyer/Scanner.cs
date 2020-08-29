@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Conveyer
 {
@@ -43,12 +45,12 @@ namespace Conveyer
                         goRight = false;
                     }
 
-                    if (_map[h - 1, l] == '^') //Check For Direction --> go up
+                    if (_map[h, l] == '^') //Check For Direction --> go up
                     {
                         goUp = true;
                         moveSideways = false;
                     }
-                    if (_map[h - 1, l] == 'ᵥ') //Check For Direction --> go down
+                    if (_map[h, l] == 'ᵥ') //Check For Direction --> go down
                     {
                         goUp = false;
                         moveSideways = false;
@@ -65,17 +67,17 @@ namespace Conveyer
                         h--;
                     }
 
-                    if (_map[h + 1, l - 2] == '‾' && goRight == false && moveSideways == true) //Go left
+                    if (_map[h - 1, l - 2] == '_' && goRight == false && moveSideways == true) //Go left
                     {
                         l--;
                     }
 
-                    if (_map[h + 1, l + 2] == '‾' && goRight == true && moveSideways == true) //Go right
+                    if (_map[h - 1, l + 2] == '_' && goRight == true && moveSideways == true) //Go right
                     {
                         l++;
                     }
 
-                    if (_map[h, l + 1] == '~') //End of conveyor belt
+                    if (_map[h, l + 1] == '~' || _map[h, l - 1] == '~' || _map[h + 1, l] == '~' || _map[h - 1, l] == '~') //End of conveyor belt
                     {
                         //Console.WriteLine("Mission Complete!");
                         OutputQueue.PrintResult(); //Print all the letters on the conveoyr belt

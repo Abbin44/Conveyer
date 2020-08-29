@@ -13,6 +13,7 @@ namespace Conveyer
         static void Main(string[] args)
         {
             // Check for correct file format and length            
+            
             if (!(args.Length == 1 && args[0].EndsWith(".coy")))
             {
                 Console.WriteLine("Code not a valid file");
@@ -20,9 +21,11 @@ namespace Conveyer
                 return;
             }
             filePath = args[0];
+            
             height = File.ReadLines(filePath).Count();
 
             FileHandler fh = new FileHandler(filePath);
+            Console.ReadKey();
         }
 
         static public void CreateArray(int length)
@@ -52,20 +55,6 @@ namespace Conveyer
             }
             //Close streamreader to avoid memory leak
             sr.Close();
-
-            #region PrintArray
-            /*
-            //Print array
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    Console.Write(string.Format("{0} ", map[i, j]));
-                }
-                Console.Write(Environment.NewLine + Environment.NewLine);
-            }
-            */
-            #endregion
 
             Scanner sc = new Scanner(length, map, filePath);
             Console.ReadKey();
