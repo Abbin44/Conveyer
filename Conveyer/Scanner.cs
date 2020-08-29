@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace Conveyer
 {
@@ -22,6 +16,7 @@ namespace Conveyer
             bool goUp = false;
             bool goRight = true;
             bool moveSideways = true;
+            bool scanFinished = false;
 
             for (int h = 1; h < Controller.height;)
             {
@@ -31,10 +26,10 @@ namespace Conveyer
                     {
                         OutputQueue oQueue = new OutputQueue(_map[h, l].ToString());//Add to output queue
                     }
-                    Console.WriteLine("h = " + h);
-                    Console.WriteLine("l = " + l);
-                    #region MazeCheck
 
+                    //Console.WriteLine("h = " + h);
+                    //Console.WriteLine("l = " + l);
+                    #region MazeCheck
 
                     if (_map[h, l - 1] == '>') //Check For Direction --> go right
                     {
@@ -52,13 +47,11 @@ namespace Conveyer
                     {
                         goUp = true;
                         moveSideways = false;
-                        Console.WriteLine("GooooUP");
                     }
-                    if (_map[h, l] == 'ᵥ') //Check For Direction --> go down
+                    if (_map[h - 1, l] == 'ᵥ') //Check For Direction --> go down
                     {
                         goUp = false;
                         moveSideways = false;
-                        Console.WriteLine("GooooDOWN");
                     }
 
                     if (_map[h, l - 1] == '|' && _map[h, l + 1] == '|' && goUp == false && moveSideways == false) //Go down
@@ -84,13 +77,18 @@ namespace Conveyer
 
                     if (_map[h, l + 1] == '~') //End of conveyor belt
                     {
-                        Console.WriteLine("Mission Complete!");
+                        //Console.WriteLine("Mission Complete!");
+                        OutputQueue.PrintResult(); //Print all the letters on the conveoyr belt
+
+                        scanFinished = true;
                         break;
                     }
                     #endregion
                 }
+
+                if (scanFinished == true)
+                    break;
             }
-            Console.ReadKey();
         }
     }
 }

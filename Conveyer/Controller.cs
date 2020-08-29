@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Conveyer
 {
     class Controller
     {
-        static string filePath = @"F:\Programmering\Repos\Conveyer\Conveyer\code.txt";
-        static public int height = File.ReadLines(filePath).Count();
+        static string filePath;
+        static public int height;
 
         static void Main(string[] args)
         {
-            // Check for correct file format and length
-            /*
+            // Check for correct file format and length            
             if (!(args.Length == 1 && args[0].EndsWith(".coy")))
             {
                 Console.WriteLine("Code not a valid file");
@@ -23,7 +20,7 @@ namespace Conveyer
                 return;
             }
             filePath = args[0];
-            */
+            height = File.ReadLines(filePath).Count();
 
             FileHandler fh = new FileHandler(filePath);
         }
@@ -71,6 +68,7 @@ namespace Conveyer
             #endregion
 
             Scanner sc = new Scanner(length, map, filePath);
+            Console.ReadKey();
         }
     }
 }
