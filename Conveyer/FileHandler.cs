@@ -28,6 +28,8 @@ namespace Conveyer
         {
             string[] lines = new string[Controller.height];
             int lineCounter = 0;
+            bool addWhite = false;
+            string temp;
 
             const Int32 BufferSize = 128;
             using (var fileStream = File.OpenRead(file))
@@ -35,9 +37,20 @@ namespace Conveyer
             {
                 string line;
                 while ((line = streamReader.ReadLine()) != null)
-                {
+                {                 
                     //Reads file and adds lines to an array
                     lines[lineCounter] = line;
+
+                    //Check if there is a blank space at char 1, otherwise add one
+                    if (lines[lineCounter].StartsWith(">") || lines[lineCounter].StartsWith("|") || lines[lineCounter].StartsWith("‾") || lines[lineCounter].StartsWith("_"))
+                        addWhite = true;
+
+                    if(addWhite == true)
+                    {
+                        temp = lines[lineCounter].Insert(0, " ");
+                        lines[lineCounter] = temp;
+                    }
+
                     Console.WriteLine(lines[lineCounter]); //THIS IS THE GOOD LOOKING DEBUG PRINT
                     lineCounter++;
                 }

@@ -20,9 +20,24 @@ namespace Conveyer
             bool moveSideways = true;
             bool scanFinished = false;
 
-            for (int h = 1; h < Controller.height;)
+            int h = 0;
+            int l = 0;
+
+            //Check if first belt go right of down and adjust scan 
+            if(_map[1, 1] == '>') 
             {
-                for (int l = 2; l < length;)
+                h = 1;
+                l = 2;
+            }
+            else if(_map[0, 2] == 'ᵥ')
+            {
+                h = 0;
+                l = 2;
+            }
+
+            for (; h < Controller.height;)
+            {
+                for (; l < length;)
                 {
                     if (reg.IsMatch(_map[h, l].ToString())) //If current pos has a character to print, queue it
                     {
@@ -67,12 +82,12 @@ namespace Conveyer
                         h--;
                     }
 
-                    if (_map[h - 1, l - 2] == '_' && goRight == false && moveSideways == true) //Go left
+                    if ((_map[h - 1, l - 2] == '_' || _map[h + 1, l - 2] == '‾') && goRight == false && moveSideways == true) //Go left
                     {
                         l--;
                     }
 
-                    if (_map[h - 1, l + 2] == '_' && goRight == true && moveSideways == true) //Go right
+                    if ((_map[h - 1, l + 2] == '_' || _map[h + 1, l + 2] == '‾') && goRight == true && moveSideways == true) //Go right
                     {
                         l++;
                     }
