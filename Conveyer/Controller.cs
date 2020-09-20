@@ -12,14 +12,15 @@ namespace Conveyer
 
         static void Main(string[] args)
         {
-            // Check for correct file format and length             
+            // Check for correct file format and length                     
             if (!(args.Length == 1 && args[0].EndsWith(".coy")))
             {
                 Console.WriteLine("Code not a valid file");
                 Console.ReadKey();
                 return;
             }
-            filePath = args[0];    
+
+            filePath = args[0]; 
             height = File.ReadLines(filePath).Count();
 
             FileHandler fh = new FileHandler(filePath);

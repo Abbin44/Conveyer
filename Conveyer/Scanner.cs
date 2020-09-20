@@ -41,8 +41,26 @@ namespace Conveyer
                 {
                     if (reg.IsMatch(_map[h, l].ToString())) //If current pos has a character to print, queue it
                     {
-                        OutputQueue oQueue = new OutputQueue(_map[h, l].ToString());//Add to output queue
+                        OutputQueue oQueue = new OutputQueue(_map[h, l]);//Add to output queue
                     }
+
+                    if(_map[h, l] == '+')
+                    {
+                        OutputQueue oQueue = new OutputQueue(_map[h, l]);//Add to output queue
+                    }
+                    if (_map[h, l] == '-')
+                    {
+                        OutputQueue oQueue = new OutputQueue(_map[h, l]);//Add to output queue
+                    }
+                    if (_map[h, l] == '*')
+                    {
+                        OutputQueue oQueue = new OutputQueue(_map[h, l]);//Add to output queue
+                    }
+                    if (_map[h, l] == '/')
+                    {
+                        OutputQueue oQueue = new OutputQueue(_map[h, l]);//Add to output queue
+                    }
+
 
                     //Console.WriteLine("h = " + h);
                     //Console.WriteLine("l = " + l);
@@ -95,7 +113,7 @@ namespace Conveyer
                     if (_map[h, l + 1] == '~' || _map[h, l - 1] == '~' || _map[h + 1, l] == '~' || _map[h - 1, l] == '~') //End of conveyor belt
                     {
                         //Console.WriteLine("Mission Complete!");
-                        OutputQueue.PrintResult(); //Print all the letters on the conveoyr belt
+                        OutputQueue.Machine(); //Check for machines and then print result
 
                         scanFinished = true;
                         break;
